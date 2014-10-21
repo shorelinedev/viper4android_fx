@@ -13,6 +13,19 @@
     <item>lq</item>
   </string-array>
 
+  <string-array name="vse_strength_values">
+    <item>0.1</item>
+    <item>0.2</item>
+    <item>0.3</item>
+    <item>0.4</item>
+    <item>0.5</item>
+    <item>0.6</item>
+    <item>0.7</item>
+    <item>0.8</item>
+    <item>0.9</item>
+    <item>1.0</item>
+  </string-array>
+
   <string-array name="colorfulmusic_coeffs">
     <item>Slight</item>
     <item>Level 1</item>
@@ -424,9 +437,6 @@
     <item>80 Percent</item>
     <item>90 Percent</item>
     <item>100 Percent</item>
-    <item>120 Percent</item>
-    <item>150 Percent</item>
-    <item>200 Percent</item>
   </string-array>
 
   <string-array name="dynamicsystem_bass_values" translatable="false">
@@ -462,9 +472,6 @@
     <item>80</item>
     <item>90</item>
     <item>100</item>
-    <item>120</item>
-    <item>150</item>
-    <item>200</item>
   </string-array>
 
   <string-array name="dynamicsystem_outputs">
@@ -522,16 +529,22 @@
     <item>2</item>
   </string-array>
   <string-array name="vbass_freq">
+    <item>30 Hz</item>
     <item>40 Hz</item>
     <item>50 Hz</item>
     <item>60 Hz</item>
+    <item>66 Hz</item>
+    <item>78 Hz</item>
     <item>80 Hz</item>
     <item>100 Hz</item>
   </string-array>
   <string-array name="vbass_freq_values"  translatable="false">
+    <item>30</item>
     <item>40</item>
     <item>50</item>
     <item>60</item>
+    <item>66</item>
+    <item>78</item>
     <item>80</item>
     <item>100</item>
   </string-array>

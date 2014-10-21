@@ -1,97 +1,104 @@
 package com.vipercn.viper4android_v2.activity;
 
-import java.nio.charset.Charset;
-
 import android.util.Log;
 
-public class V4AJniInterface
-{
-	private static boolean m_JniLoadOK = false;
-	static
-	{
-		try
-		{
-			System.loadLibrary("V4AJniUtils");
-			m_JniLoadOK = true;
-			Log.i("ViPER4Android_Utils", "libV4AJniUtils.so loaded");
-		}
-		catch (UnsatisfiedLinkError e)
-		{
-			m_JniLoadOK = false;
-			Log.e("ViPER4Android_Utils", "[Fatal] Can't load libV4AJniUtils.so");
-		}
-	}
+import java.nio.charset.Charset;
 
-	/* Library Check Utils */
-	private native static int CheckLibraryUsable();
+public class V4AJniInterface {
 
-	/* CPU Check Utils */
-	private native static int CheckCPUHasNEON();
-	private native static int CheckCPUHasVFP();
+    private static boolean mJniLoadOK;
 
-	/* Impulse Response Utils */
-	private native static int[] GetImpulseResponseInfo(byte[] szIRFileName);
-	private native static byte[] ReadImpulseResponse(byte[] szIRFileName);
-	private native static int[] HashImpulseResponse(byte[] baBuffer, int nBufferSize); 
+    static {
+        try {
+            System.loadLibrary("V4AJniUtils");
+            mJniLoadOK = true;
+            Log.i("ViPER4Android_Utils", "libV4AJniUtils.so loaded");
+        } catch (UnsatisfiedLinkError e) {
+            mJniLoadOK = false;
+            Log.e("ViPER4Android_Utils", "[Fatal] Can't load libV4AJniUtils.so");
+        }
+    }
 
-	/* This method is just making sure jni has been loaded */
-	public static boolean CheckLibrary()
-	{
-		if (!m_JniLoadOK) return false;
-		int nUsable = CheckLibraryUsable();
-		if (nUsable == 1) return true;
-		else return false;
-	}
+    /* Library Check Utils */
+    private native static int CheckLibraryUsable();
 
-	public static boolean IsLibraryUsable()
-	{
-		if (!m_JniLoadOK) return false;
-		return true;
-	}
+    /* CPU Check Utils */
+    private native static int CheckCPUHasNEON();
 
-	public static boolean IsCPUSupportNEON()
-	{
-		if (!m_JniLoadOK) return false;
-		int nResult = CheckCPUHasNEON();
-		Log.i("ViPER4Android_Utils", "CPUInfo[jni] = NEON:" + nResult);
-		if (nResult == 0) return false;
-		return true;
-	}
+    private native static int CheckCPUHasVFP();
 
-	public static boolean IsCPUSupportVFP()
-	{
-		if (!m_JniLoadOK) return false;
-		int nResult = CheckCPUHasVFP();
-		Log.i("ViPER4Android_Utils", "CPUInfo[jni] = VFP:" + nResult);
-		if (nResult == 0) return false;
-		return true;
-	}
+    /* Impulse Response Utils */
+    private native static int[] GetImpulseResponseInfo(byte[] mIRFileName);
 
-	public static int[] GetImpulseResponseInfoArray(String szIRFileName)
-	{
-		if (!m_JniLoadOK) return null;
-		// Convert unicode string to multi-byte string
-		byte[] stringBytes = szIRFileName.getBytes(Charset.forName("US-ASCII"));
-		if (stringBytes == null) return null;
-		// Call native
-		return GetImpulseResponseInfo(stringBytes);
-	}
+    private native static byte[] ReadImpulseResponse(byte[] mIRFileName);
 
-	public static byte[] ReadImpulseResponseToArray(String szIRFileName)
-	{
-		if (!m_JniLoadOK) return null;
-		// Convert unicode string to multi-byte string
-		byte[] stringBytes = szIRFileName.getBytes(Charset.forName("US-ASCII"));
-		if (stringBytes == null) return null;
-		// Call native
-		return ReadImpulseResponse(stringBytes);
-	}
+    private native static int[] HashImpulseResponse(byte[] mBuffer, int mBufferSize);
 
-	public static int[] GetHashImpulseResponseArray(byte[] baBuffer)
-	{
-		if (!m_JniLoadOK) return null;
-		if (baBuffer == null) return null;
-		// Call native
-		return HashImpulseResponse(baBuffer, baBuffer.length);
-	}
+    /* This method is just making sure jni has been loaded */
+    public static boolean CheckLibrary() {
+        if (!mJniLoadOK) {
+            return false;
+        }
+        int mUsable = CheckLibraryUsable();
+        return mUsable == 1;
+    }
+
+    public static boolean IsLibraryUsable() {
+        return mJniLoadOK;
+    }
+
+    public static boolean IsCPUSupportNEON() {
+        if (!mJniLoadOK) {
+            return false;
+        }
+        int mResult = CheckCPUHasNEON();
+        Log.i("ViPER4Android_Utils", "CpuInfo[jni] = NEON:" + mResult);
+        return mResult != 0;
+    }
+
+    public static boolean IsCPUSupportVFP() {
+        if (!mJniLoadOK) {
+            return false;
+        }
+        int mResult = CheckCPUHasVFP();
+        Log.i("ViPER4Android_Utils", "CpuInfo[jni] = VFP:" + mResult);
+        return mResult != 0;
+    }
+
+    public static int[] GetImpulseResponseInfoArray(String mIRFileName) {
+        if (!mJniLoadOK) {
+            return null;
+        }
+        // Convert unicode string to multi-byte string
+        byte[] stringBytes = mIRFileName.getBytes(Charset.forName("US-ASCII"));
+        if (stringBytes == null) {
+            return null;
+        }
+        // Call native
+        return GetImpulseResponseInfo(stringBytes);
+    }
+
+    public static byte[] ReadImpulseResponseToArray(String mIRFileName) {
+        if (!mJniLoadOK) {
+            return null;
+        }
+        // Convert unicode string to multi-byte string
+        byte[] stringBytes = mIRFileName.getBytes(Charset.forName("US-ASCII"));
+        if (stringBytes == null) {
+            return null;
+        }
+        // Call native
+        return ReadImpulseResponse(stringBytes);
+    }
+
+    public static int[] GetHashImpulseResponseArray(byte[] mBuffer) {
+        if (!mJniLoadOK) {
+            return null;
+        }
+        if (mBuffer == null) {
+            return null;
+        }
+        // Call native
+        return HashImpulseResponse(mBuffer, mBuffer.length);
+    }
 }
